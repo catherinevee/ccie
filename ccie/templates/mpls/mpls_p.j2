@@ -1,0 +1,25 @@
+FILE: /ccie/ccie/templates/mpls/mpls_p.j2
+----------------------------------------
+# MPLS P Router Configuration Template
+# This template is used for generating MPLS configurations for P routers.
+
+hostname {{ device_name }}
+!
+interface Loopback0
+ ip address {{ loopback_ip }} {{ subnet_mask }}
+!
+mpls ip
+!
+router bgp {{ bgp_as }}
+ bgp log-neighbor-changes
+ neighbor {{ neighbor_ip }} remote-as {{ neighbor_as }}
+!
+interface {{ interface_name }}
+ description Connection to {{ connection_description }}
+ ip address {{ interface_ip }} {{ interface_subnet_mask }}
+ mpls ip
+!
+ip route {{ destination_network }} {{ subnet_mask }} {{ next_hop }}
+!
+# Additional MPLS configurations can be added below
+```

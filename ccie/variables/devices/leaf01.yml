@@ -1,0 +1,44 @@
+---
+# Device-specific variables for leaf01
+
+hostname: leaf01
+role: leaf
+mgmt_ip: 10.0.1.11
+loopbacks:
+- 10.1.1.11
+interfaces:
+- name: Ethernet1
+  description: Uplink to spine01
+  ip_address: 10.0.1.1/24
+  vlan: 10
+- name: Ethernet2
+  description: Uplink to spine02
+  ip_address: 10.0.1.2/24
+  vlan: 10
+- name: Ethernet3
+  description: Downlink to server
+  ip_address: 10.0.2.1/24
+  vlan: 20
+uplinks:
+- spine01
+- spine02
+vlans:
+- id: 10
+  name: "Tenant_A"
+- id: 20
+  name: "Tenant_B"
+bgp:
+  asn: 65001
+  neighbors:
+  - ip: 10.0.1.254
+    remote_as: 65000
+    description: "Spine01 BGP neighbor"
+  - ip: 10.0.1.253
+    remote_as: 65000
+    description: "Spine02 BGP neighbor"
+ospf:
+  area: 0
+  router_id: 1.1.1.11
+qos:
+  policy: "default"
+  description: "Default QoS policy for leaf01"

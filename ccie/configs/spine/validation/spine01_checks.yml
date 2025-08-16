@@ -1,0 +1,47 @@
+FILE: /ccie/ccie/configs/spine/validation/spine01_checks.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Validation checks for spine01 switch
+# Scope: Device-specific validation
+# ==============================================
+
+validation_checks:
+  - name: "Check hostname"
+    command: "show running-config | include hostname"
+    expected: "spine01"
+    description: "Ensure the hostname is set correctly."
+
+  - name: "Check interface status"
+    command: "show ip interface brief"
+    expected: 
+      - "GigabitEthernet1/0/1    up   up"
+      - "GigabitEthernet1/0/2    up   up"
+    description: "Verify that all critical interfaces are up."
+
+  - name: "Check BGP neighbors"
+    command: "show ip bgp summary"
+    expected: 
+      - "Neighbor        V    AS    MsgRcvd    MsgSent    Up/Down"
+      - "10.0.0.2       4  65001  100        100        1d23h"
+    description: "Ensure BGP neighbors are established."
+
+  - name: "Check VLAN configuration"
+    command: "show vlan brief"
+    expected: 
+      - "VLAN Name                             Status    Ports"
+      - "10   VLAN0010                         active    Gi1/0/1, Gi1/0/2"
+    description: "Verify that VLANs are configured correctly."
+
+  - name: "Check OSPF neighbors"
+    command: "show ip ospf neighbor"
+    expected: 
+      - "Neighbor ID     Pri   State           Dead Time   Address         Interface"
+      - "10.0.0.3        10    FULL/BDR       00:00:34    10.0.0.3       Gi1/0/1"
+    description: "Ensure OSPF neighbors are established."
+
+  - name: "Check for logging"
+    command: "show logging"
+    expected: "Syslog logging: enabled"
+    description: "Ensure logging is enabled for troubleshooting."
+----------------------------------------

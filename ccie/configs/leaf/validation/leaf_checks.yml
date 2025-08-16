@@ -1,0 +1,44 @@
+FILE: /ccie/ccie/configs/leaf/validation/leaf_checks.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Validation checks for leaf switches
+# Scope: Leaf switches
+# ==============================================
+
+validation_checks:
+  - name: "Check VLAN Configuration"
+    description: "Ensure all required VLANs are configured on the leaf switches."
+    command: "show vlan brief"
+    expected_output: 
+      - "VLAN 10"
+      - "VLAN 20"
+      - "VLAN 30"
+
+  - name: "Check Interface Status"
+    description: "Verify that all interfaces are up and operational."
+    command: "show ip interface brief"
+    expected_output: 
+      - "GigabitEthernet1/0/1 up"
+      - "GigabitEthernet1/0/2 up"
+
+  - name: "Check BGP Neighbors"
+    description: "Ensure BGP neighbors are established."
+    command: "show ip bgp summary"
+    expected_output: 
+      - "BGP state = Established"
+
+  - name: "Check VXLAN Configuration"
+    description: "Verify that VXLAN is configured correctly."
+    command: "show vxlan"
+    expected_output: 
+      - "VNI 10010"
+      - "VNI 10020"
+
+  - name: "Check MTU Settings"
+    description: "Ensure MTU settings are consistent across interfaces."
+    command: "show interfaces | include MTU"
+    expected_output: 
+      - "MTU 9216"
+      - "MTU 9216"
+----------------------------------------

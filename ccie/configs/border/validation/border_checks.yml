@@ -1,0 +1,34 @@
+FILE: /ccie/ccie/configs/border/validation/border_checks.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Validation checks for border devices
+# Scope: Device
+# ==============================================
+
+validation_checks:
+  - name: "Check BGP Status"
+    description: "Ensure BGP is established with all neighbors."
+    command: "show ip bgp summary"
+    expected_output: "BGP state = Established"
+
+  - name: "Check Interface Status"
+    description: "Verify all interfaces are up."
+    command: "show ip interface brief"
+    expected_output: "up up"
+
+  - name: "Check Route Table"
+    description: "Ensure routes are present in the routing table."
+    command: "show ip route"
+    expected_output: "O    10.0.0.0/8"
+
+  - name: "Check ACLs"
+    description: "Verify that ACLs are applied correctly."
+    command: "show access-lists"
+    expected_output: "permit ip any any"
+
+  - name: "Check NAT Configuration"
+    description: "Ensure NAT is configured correctly."
+    command: "show ip nat translations"
+    expected_output: "tcp 10.0.0.1:80"
+----------------------------------------

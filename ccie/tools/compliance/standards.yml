@@ -1,0 +1,44 @@
+FILE: /ccie/ccie/tools/compliance/standards.yml
+----------------------------------------
+---
+# ==============================================
+# Compliance Standards and Requirements
+# ==============================================
+
+standards:
+  - name: PCI-DSS
+    description: Payment Card Industry Data Security Standard
+    requirements:
+      - "Install and maintain a firewall configuration to protect cardholder data."
+      - "Do not use vendor-supplied defaults for system passwords and other security parameters."
+      - "Protect stored cardholder data."
+      - "Encrypt transmission of cardholder data across open and public networks."
+  
+  - name: HIPAA
+    description: Health Insurance Portability and Accountability Act
+    requirements:
+      - "Ensure the confidentiality, integrity, and availability of all electronic protected health information."
+      - "Implement technical safeguards to protect electronic health information."
+      - "Conduct regular risk assessments to identify vulnerabilities."
+
+  - name: NIST SP 800-53
+    description: National Institute of Standards and Technology Special Publication 800-53
+    requirements:
+      - "Access Control: Limit access to information and information systems."
+      - "Audit and Accountability: Create, protect, and retain information system audit records."
+      - "System and Communications Protection: Monitor, control, and protect communications at the external boundary."
+
+  - name: ISO 27001
+    description: International Organization for Standardization 27001
+    requirements:
+      - "Establish, implement, maintain, and continually improve an information security management system."
+      - "Assess and treat information security risks tailored to the needs of the organization."
+      - "Ensure compliance with legal, regulatory, and contractual requirements."
+
+  - name: GDPR
+    description: General Data Protection Regulation
+    requirements:
+      - "Obtain explicit consent from individuals before processing their personal data."
+      - "Implement measures to ensure data protection by design and by default."
+      - "Notify individuals of data breaches within 72 hours."
+----------------------------------------

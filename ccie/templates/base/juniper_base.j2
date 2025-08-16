@@ -1,0 +1,45 @@
+FILE: /ccie/ccie/templates/base/juniper_base.j2
+----------------------------------------
+## ==============================================
+## Device: {{ device.hostname }}
+## Role: {{ device.role }}
+## Platform: Juniper {{ device.model }} - {{ device.version }}
+## Generated: {{ ansible_date_time.iso8601 }}
+## ==============================================
+
+system {
+    host-name {{ device.hostname }};
+    domain-name {{ global_vars.domain }};
+}
+
+interfaces {
+    {% for interface in device.interfaces %}
+    interface {{ interface.name }} {
+        description {{ interface.description }};
+        unit 0 {
+            family inet {
+                address {{ interface.ip_address }}/{{ interface.subnet_mask }};
+            }
+        }
+    }
+    {% endfor %}
+}
+
+routing-options {
+    autonomous-system {{ global_vars.as_number }};
+    router-id {{ device.router_id }};
+}
+
+protocols {
+    bgp {
+        group external {
+            type external;
+            neighbor {{ global_vars.bgp_neighbor }} {
+                peer-as {{ global_vars.bgp_peer_as }};
+            }
+        }
+    }
+}
+
+# Additional configurations can be added here
+----------------------------------------

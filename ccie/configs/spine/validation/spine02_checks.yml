@@ -1,0 +1,37 @@
+FILE: /ccie/ccie/configs/spine/validation/spine02_checks.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Validation checks for spine02 switch
+# Scope: Device-specific validation
+# ==============================================
+
+validation_checks:
+  - name: "Check hostname"
+    command: "show running-config | include hostname"
+    expected: "hostname spine02"
+  
+  - name: "Check interface status"
+    command: "show ip interface brief"
+    expected: 
+      - "GigabitEthernet1/0/1    up   up"
+      - "GigabitEthernet1/0/2    up   up"
+  
+  - name: "Check BGP neighbors"
+    command: "show ip bgp summary"
+    expected: 
+      - "Neighbor        V    AS    MsgRcvd    MsgSent    Up/Down    State/PfxRcd"
+      - "10.0.0.1       4  65001      100        100      1d23h       2"
+  
+  - name: "Check VLAN configuration"
+    command: "show vlan brief"
+    expected: 
+      - "VLAN Name                             Status    Ports"
+      - "10   VLAN0010                         active    Gi1/0/1, Gi1/0/2"
+  
+  - name: "Check routing protocol"
+    command: "show ip route"
+    expected: 
+      - "O    10.0.0.0/24 [110/20] via 10.0.0.1, 1d23h"
+      - "C    10.0.0.0/24 is directly connected, GigabitEthernet1/0/1"
+----------------------------------------

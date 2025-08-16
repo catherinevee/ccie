@@ -1,0 +1,61 @@
+FILE: /ccie/variables/devices/leaf02.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Device-specific variables for leaf02
+# Scope: Device
+# ==============================================
+
+hostname: leaf02
+vlan:
+evpn:
+role: leaf
+mgmt_ip: 10.0.1.12
+loopbacks:
+  - 10.1.1.12
+interfaces:
+  - name: Ethernet1/1
+    description: "Uplink to spine01"
+    ip_address: 10.0.1.2/24
+    mtu: 9216
+  - name: Ethernet1/2
+    description: "Uplink to spine02"
+    ip_address: 10.0.1.3/24
+    mtu: 9216
+  - name: Ethernet1/3
+    description: "Downlink to leaf03"
+    ip_address: 10.0.2.2/24
+    mtu: 9216
+  - name: Ethernet1/4
+    description: "Downlink to leaf04"
+    ip_address: 10.0.2.3/24
+    mtu: 9216
+uplinks:
+  - spine01
+  - spine02
+vlans:
+  - id: 100
+    name: "Tenant_A"
+  - id: 200
+    name: "Tenant_B"
+bgp:
+  asn: 65001
+  neighbors:
+    - ip: 10.0.1.254
+      remote_as: 65000
+      description: "Spine01 BGP neighbor"
+    - ip: 10.0.1.253
+      remote_as: 65000
+      description: "Spine02 BGP neighbor"
+ospf:
+  area: 0
+  router_id: 1.1.1.12
+evpn:
+  vni: 1000
+  route_distinguisher: 100:1
+  import_rt: 100:1
+  export_rt: 100:1
+qos:
+  policy: "default-qos-policy"
+  bandwidth: 1000Mbps
+----------------------------------------

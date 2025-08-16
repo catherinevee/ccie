@@ -1,0 +1,41 @@
+FILE: /ccie/ccie/templates/evpn/evpn_leaf.j2
+----------------------------------------
+{% raw %}
+## ==============================================
+## EVPN Configuration for Leaf Switch
+## ==============================================
+
+{% for leaf in leaves %}
+hostname {{ leaf.hostname }}
+interface Vlan{{ leaf.vlan_id }}
+  description EVPN VNI {{ leaf.vni }}
+  no shutdown
+  ip address {{ leaf.ip_address }} {{ leaf.subnet_mask }}
+  evpn vni {{ leaf.vni }} l2
+  bridge-group {{ leaf.bridge_group }}
+  exit
+
+{% endfor %}
+
+## BGP Configuration
+router bgp {{ global.bgp_as }}
+  bgp log-neighbor-changes
+  neighbor {{ global.evpn_neighbor }} remote-as {{ global.evpn_as }}
+  neighbor {{ global.evpn_neighbor }} activate
+  address-family l2vpn evpn
+    advertise-all-vni
+  exit-address-family
+exit
+
+## Anycast Gateway Configuration
+interface Vlan{{ global.anycast_vlan }}
+  ip address {{ global.anycast_ip }} {{ global.anycast_mask }}
+  no shutdown
+exit
+
+## Additional Configuration
+{% for service in services %}
+  service {{ service.name }} {{ service.config }}
+{% endfor %}
+----------------------------------------
+{% endraw %}

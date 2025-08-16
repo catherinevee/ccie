@@ -1,0 +1,14 @@
+FILE: /ccie/requirements.txt
+----------------------------------------
+# Python dependencies for the network configuration project
+ansible
+pyyaml
+netmiko
+jinja2
+pytest
+requests
+paramiko
+nornir
+nornir-netmiko
+nornir-pytest
+----------------------------------------

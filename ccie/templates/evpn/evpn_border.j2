@@ -1,0 +1,85 @@
+FILE: /ccie/ccie/templates/evpn/evpn_border.j2
+----------------------------------------
+## ==============================================
+## Device: {{ device.hostname }}
+## Role: BORDER
+## Platform: {{ device.platform }}
+## Generated: {{ ansible_date_time.iso8601 }}
+## ==============================================
+
+system {
+    host-name {{ device.hostname }};
+    domain-name {{ global_vars.domain }};
+}
+
+interfaces {
+    # Loopback interface for BGP
+    interface lo0 {
+        unit 0 {
+            family inet {
+                address {{ device.loopback_ip }}/32;
+            }
+        }
+    }
+
+    # Ethernet interfaces for EVPN
+    {% for interface in device.interfaces %}
+    interface {{ interface.name }} {
+        description "Connected to {{ interface.peer }}";
+        mtu {{ interface.mtu }};
+        unit 0 {
+            family ethernet-switching {
+                port-mode trunk;
+                vlan {
+                    members {{ interface.vlans | join(', ') }};
+                }
+            }
+        }
+    }
+    {% endfor %}
+}
+
+routing-options {
+    router-id {{ device.loopback_ip }};
+    autonomous-system {{ global_vars.as_number }};
+}
+
+protocols {
+    bgp {
+        group EVPN {
+            type external;
+            local-as {{ global_vars.local_as }};
+            neighbor {{ global_vars.evpn_peer }} {
+                peer-as {{ global_vars.evpn_peer_as }};
+                family {
+                    ethernet-switching;
+                }
+            }
+        }
+    }
+}
+
+vlans {
+    {% for vlan in global_vars.vlans %}
+    vlan {{ vlan.id }} {
+        name "{{ vlan.name }}";
+    }
+    {% endfor %}
+}
+
+# EVPN Configuration
+evpn {
+    vni {{ global_vars.vni }} {
+        route-distinguisher {{ global_vars.route_distinguisher }};
+        vpn-target {{ global_vars.vpn_target }};
+    }
+}
+
+# Anycast Gateway Configuration
+virtual-gateway {
+    address {{ global_vars.anycast_ip }};
+    interface lo0.0;
+}
+
+# Additional configurations can be added here
+----------------------------------------

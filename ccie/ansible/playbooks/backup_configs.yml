@@ -1,0 +1,36 @@
+FILE: /ccie/ccie/ansible/playbooks/backup_configs.yml
+----------------------------------------
+---
+- name: Backup Device Configurations
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Ensure backup directory exists
+      file:
+        path: /path/to/backup/directory
+        state: directory
+
+    - name: Backup running configuration
+      command: >
+        {{ ansible_net_cli }} show running-config
+      register: running_config
+
+    - name: Save running configuration to file
+      copy:
+        content: "{{ running_config.stdout }}"
+        dest: "/path/to/backup/directory/{{ inventory_hostname }}_running.cfg"
+
+    - name: Backup startup configuration
+      command: >
+        {{ ansible_net_cli }} show startup-config
+      register: startup_config
+
+    - name: Save startup configuration to file
+      copy:
+        content: "{{ startup_config.stdout }}"
+        dest: "/path/to/backup/directory/{{ inventory_hostname }}_startup.cfg"
+
+    - name: Notify user of backup completion
+      debug:
+        msg: "Backup completed for {{ inventory_hostname }}"
+----------------------------------------

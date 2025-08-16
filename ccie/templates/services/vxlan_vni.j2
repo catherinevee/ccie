@@ -1,0 +1,24 @@
+FILE: /ccie/ccie/templates/services/vxlan_vni.j2
+----------------------------------------
+{% raw %}
+# VXLAN VNI Configuration Template
+
+{% for vni in vni_mapping %}
+vni {{ vni.vni }} {
+    vxlan {
+        vni {{ vni.vni }};
+        bridge {{ vni.vlan }};
+        # Anycast gateway configuration
+        anycast-gateway {{ vni.anycast_ip }};
+    }
+}
+{% endfor %}
+
+# VNI to VLAN Mapping
+{% for vni in vni_mapping %}
+vlan {{ vni.vlan }} {
+    name "VLAN {{ vni.vlan }} for VNI {{ vni.vni }}";
+}
+{% endfor %}
+{% endraw %}
+----------------------------------------

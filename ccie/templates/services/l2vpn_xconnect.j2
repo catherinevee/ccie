@@ -1,0 +1,15 @@
+FILE: /ccie/ccie/templates/services/l2vpn_xconnect.j2
+----------------------------------------
+# L2VPN Cross-Connect Configuration Template
+# This template is used to generate L2VPN cross-connect configurations for devices.
+
+{% for connection in connections %}
+interface {{ connection.interface }}
+ description Cross-connect to {{ connection.remote_device }}
+ no shutdown
+ l2vpn xconnect {{ connection.remote_ip }} {{ connection.vc_id }} encapsulation mpls
+!
+{% endfor %}
+
+# End of L2VPN Cross-Connect Configuration
+----------------------------------------

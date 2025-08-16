@@ -1,0 +1,43 @@
+FILE: /ccie/ccie/ansible/playbooks/deploy_fabric.yml
+----------------------------------------
+---
+- name: Deploy Network Fabric
+  hosts: all
+  gather_facts: no
+  vars_files:
+    - ../../variables/global_vars.yml
+    - ../../variables/fabric_vars.yml
+
+  tasks:
+    - name: Configure Spine Switches
+      include_role:
+        name: evpn
+      when: inventory_hostname in groups['spine']
+
+    - name: Configure Leaf Switches
+      include_role:
+        name: evpn
+      when: inventory_hostname in groups['leaf']
+
+    - name: Configure Border Routers
+      include_role:
+        name: evpn
+      when: inventory_hostname in groups['border']
+
+    - name: Configure Core Routers
+      include_role:
+        name: mpls
+      when: inventory_hostname in groups['core']
+
+    - name: Validate Configuration
+      include_role:
+        name: validation
+
+    - name: Backup Configuration
+      command: "copy running-config startup-config"
+      register: backup_result
+
+    - name: Display Backup Result
+      debug:
+        var: backup_result.stdout
+----------------------------------------

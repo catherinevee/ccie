@@ -1,0 +1,26 @@
+FILE: /ccie/ccie/variables/fabric_vars.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Fabric-wide settings for network deployment
+# Scope: Fabric
+# ==============================================
+
+fabric_name: "MainFabric"
+fabric_id: "FABRIC-001"
+underlay_protocol: "OSPF"
+overlay_protocol: "BGP"
+vni_range:
+  start: 10000
+  end: 20000
+gateway_ip: "10.0.0.1"
+loopback_ip: "10.0.0.254"
+mtu: 9216
+redundancy:
+  mode: "vpc"
+  peer_link: "Ethernet1/1"
+  peer_keepalive: "Ethernet1/2"
+qos_policy: "default-qos"
+logging:
+  level: "informational"
+  server_ip: "10.0.0.100"

@@ -1,0 +1,37 @@
+FILE: /ccie/variables/devices/spine02.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Device-specific variables for spine02
+# Scope: Device
+# ==============================================
+
+hostname: spine02
+role: spine
+mgmt_ip: 10.0.2.2
+loopbacks:
+  - 10.2.2.2
+interfaces:
+  - name: Ethernet1/1
+    description: Uplink to leaf01
+    ip_address: 10.0.1.2/30
+  - name: Ethernet1/2
+    description: Uplink to leaf02
+    ip_address: 10.0.1.6/30
+uplinks: []
+vni_mapping:
+  - vni: 10010
+    vlan: 10
+  - vni: 10020
+    vlan: 20
+bgp:
+  asn: 65000
+  neighbors:
+    - ip: 10.0.1.11
+      remote_as: 65001
+    - ip: 10.0.1.12
+      remote_as: 65001
+ospf:
+  area: 0
+  router_id: 2.2.2.2
+```

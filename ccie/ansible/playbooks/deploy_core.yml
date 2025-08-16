@@ -1,0 +1,26 @@
+---
+  hosts: core
+  gather_facts: false
+  roles:
+  - role: mpls
+  - role: common
+  tasks:
+    - name: Pre-check: Verify reachability
+      ansible.builtin.ping:
+    - name: Pre-check: Verify OS version
+      ansible.builtin.command:
+        cmd: show version
+    - name: Deploy configuration
+      ansible.builtin.template:
+        src: ../../templates/mpls/mpls_p.j2
+        dest: /tmp/{{ inventory_hostname }}.cfg
+    - name: Post-check: Validate MPLS state
+      ansible.builtin.command:
+        cmd: show mpls ldp neighbor
+    - name: Post-check: Validate OSPF state
+      ansible.builtin.command:
+        cmd: show ospf neighbor
+  handlers:
+    - name: Reload device
+      ansible.builtin.command:
+        cmd: reload

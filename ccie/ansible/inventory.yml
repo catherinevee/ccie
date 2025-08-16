@@ -1,0 +1,71 @@
+---
+# Inventory file for Ansible playbooks
+# This file lists the devices that Ansible will manage
+
+all:
+  hosts:
+    spine01:
+      ansible_host: 10.0.0.1
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    spine02:
+      ansible_host: 10.0.0.2
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    leaf01:
+      ansible_host: 10.0.0.3
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    leaf02:
+      ansible_host: 10.0.0.4
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    leaf03:
+      ansible_host: 10.0.0.5
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    leaf04:
+      ansible_host: 10.0.0.6
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    border01:
+      ansible_host: 10.0.0.7
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    border02:
+      ansible_host: 10.0.0.8
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    p01:
+      ansible_host: 10.0.0.9
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    p02:
+      ansible_host: 10.0.0.10
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+    pe01:
+      ansible_host: 10.0.0.11
+      ansible_user: admin
+      ansible_ssh_private_key_file: /path/to/private/key
+
+  children:
+    spine:
+      hosts:
+        spine01:
+        spine02:
+    leaf:
+      hosts:
+        leaf01:
+        leaf02:
+        leaf03:
+        leaf04:
+    border:
+      hosts:
+        border01:
+        border02:
+    core:
+      hosts:
+        p01:
+        p02:
+        pe01:

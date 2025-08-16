@@ -1,0 +1,41 @@
+FILE: /ccie/ccie/templates/base/cisco_base.j2
+----------------------------------------
+! ==============================================
+! Device: {{ device_name }}
+! Role: {{ device_role }}
+! Platform: {{ platform }}
+! Generated: {{ generation_date }}
+! ==============================================
+
+! Management Configuration
+hostname {{ device_name }}
+ip domain-name {{ domain_name }}
+!
+interface {{ management_interface }}
+ ip address {{ management_ip }} {{ management_subnet }}
+ no shutdown
+!
+! Enable secret
+enable secret {{ enable_secret }}
+!
+! SNMP Configuration
+snmp-server community {{ snmp_community }} RO
+!
+! Logging Configuration
+logging host {{ logging_server }}
+logging trap informational
+!
+! NTP Configuration
+ntp server {{ ntp_server }}
+!
+! ... [Complete configuration for routing protocols, VLANs, etc.]
+! Example for OSPF
+router ospf {{ ospf_process_id }}
+ network {{ ospf_network }} area {{ ospf_area }}
+!
+! Example for VLANs
+vlan {{ vlan_id }}
+ name {{ vlan_name }}
+!
+! End of Configuration
+! ==============================================

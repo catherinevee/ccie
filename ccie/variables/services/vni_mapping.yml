@@ -1,0 +1,25 @@
+FILE: /ccie/ccie/variables/services/vni_mapping.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: VNI to VLAN Mapping
+# Scope: Service Definitions
+# ==============================================
+
+vni_mapping:
+  - vni: 100
+    vlan: 10
+    description: "VNI for Tenant A"
+  - vni: 200
+    vlan: 20
+    description: "VNI for Tenant B"
+  - vni: 300
+    vlan: 30
+    description: "VNI for Tenant C"
+  - vni: 400
+    vlan: 40
+    description: "VNI for Tenant D"
+  - vni: 500
+    vlan: 50
+    description: "VNI for Tenant E"
+----------------------------------------

@@ -1,0 +1,38 @@
+FILE: /ccie/ccie/ansible/playbooks/validate_fabric.yml
+----------------------------------------
+---
+- name: Validate Network Fabric
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Validate spine switches
+      include_role:
+        name: validation
+      vars:
+        device_type: spine
+        validation_file: "{{ playbook_dir }}/../configs/spine/validation/spine{{ item }}_checks.yml"
+      loop:
+        - 01
+        - 02
+
+    - name: Validate leaf switches
+      include_role:
+        name: validation
+      vars:
+        device_type: leaf
+        validation_file: "{{ playbook_dir }}/../configs/leaf/validation/leaf_checks.yml"
+    
+    - name: Validate border devices
+      include_role:
+        name: validation
+      vars:
+        device_type: border
+        validation_file: "{{ playbook_dir }}/../configs/border/validation/border_checks.yml"
+
+    - name: Validate core routers
+      include_role:
+        name: validation
+      vars:
+        device_type: core
+        validation_file: "{{ playbook_dir }}/../configs/core/validation/core_checks.yml"
+----------------------------------------

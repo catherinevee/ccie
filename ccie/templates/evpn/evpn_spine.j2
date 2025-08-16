@@ -1,0 +1,51 @@
+FILE: /ccie/ccie/templates/evpn/evpn_spine.j2
+----------------------------------------
+# EVPN Configuration Template for Spine Switches
+
+# Underlay IGP Configuration
+interface Ethernet1/1
+  description Uplink to Leaf
+  no shutdown
+  ip address {{ spine_uplink_ip }} {{ spine_uplink_mask }}
+  
+interface Ethernet1/2
+  description Uplink to Spine
+  no shutdown
+  ip address {{ spine_peer_ip }} {{ spine_peer_mask }}
+
+# BGP Configuration
+router bgp {{ bgp_as_number }}
+  bgp log-neighbor-changes
+  neighbor {{ spine_peer_ip }} remote-as {{ peer_as_number }}
+  neighbor {{ spine_peer_ip }} activate
+  neighbor {{ spine_peer_ip }} route-map RM-EXPORT out
+
+# EVPN Configuration
+evpn
+  vni {{ vni_number }}
+    rd {{ route_distinguisher }}
+    route-target import {{ route_target_import }}
+    route-target export {{ route_target_export }}
+  
+# Anycast Gateway Configuration
+interface Vlan{{ anycast_vlan }}
+  ip address {{ anycast_ip }} {{ anycast_mask }}
+  no shutdown
+
+# Multihoming Configuration
+interface Ethernet1/3
+  description Second Uplink to Leaf
+  no shutdown
+  ip address {{ spine_second_uplink_ip }} {{ spine_second_uplink_mask }}
+
+# ESI Configuration
+esi {{ esi_value }}
+
+# DCI Border Configuration
+interface Ethernet1/4
+  description DCI Link
+  no shutdown
+  ip address {{ dci_ip }} {{ dci_mask }}
+
+# End of Configuration
+----------------------------------------

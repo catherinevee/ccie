@@ -1,0 +1,34 @@
+FILE: /ccie/ccie/ansible/playbooks/rollback.yml
+----------------------------------------
+---
+- name: Rollback Configuration
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Restore previous configuration
+      copy:
+        src: "{{ item }}"
+        dest: "/etc/network/configs/{{ inventory_hostname }}.cfg"
+      with_items:
+        - "/backup/{{ inventory_hostname }}.cfg"
+      when: ansible_hostname is defined
+
+    - name: Restart network service
+      service:
+        name: networking
+        state: restarted
+
+    - name: Validate configuration after rollback
+      command: "/usr/bin/validate_config.sh {{ inventory_hostname }}"
+      register: validation_result
+
+    - name: Check validation result
+      debug:
+        msg: "Validation successful for {{ inventory_hostname }}"
+      when: validation_result.rc == 0
+
+    - name: Fail if validation fails
+      fail:
+        msg: "Validation failed for {{ inventory_hostname }}"
+      when: validation_result.rc != 0
+----------------------------------------

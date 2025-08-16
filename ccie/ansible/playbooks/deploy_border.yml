@@ -1,0 +1,59 @@
+---
+  hosts: border
+  gather_facts: false
+  roles:
+    - role: evpn
+    - role: common
+  tasks:
+    - name: Pre-check: Verify reachability
+      ansible.builtin.ping:
+    - name: Pre-check: Verify OS version
+      ansible.builtin.command:
+        cmd: show version
+    - name: Deploy configuration
+      ansible.builtin.template:
+        src: ../../templates/evpn/evpn_border.j2
+        dest: /tmp/{{ inventory_hostname }}.cfg
+    - name: Post-check: Validate BGP state
+      ansible.builtin.command:
+        cmd: show bgp summary
+    - name: Post-check: Validate OSPF state
+      ansible.builtin.command:
+        cmd: show ospf neighbor
+  handlers:
+    - name: Reload device
+      ansible.builtin.command:
+        cmd: reload
+---
+  - name: Deploy Border Devices
+    hosts: border
+    gather_facts: false
+    roles:
+      - common
+      - evpn
+      - validation
+    tasks:
+      - name: Pre-check: Verify reachability
+        ansible.builtin.ping:
+
+      - name: Pre-check: Verify OS version
+        ansible.builtin.command:
+          cmd: show version
+
+      - name: Deploy configuration
+        ansible.builtin.template:
+          src: ../../templates/evpn/evpn_border.j2
+          dest: /tmp/{{ inventory_hostname }}.cfg
+
+      - name: Post-check: Validate BGP state
+        ansible.builtin.command:
+          cmd: show bgp summary
+
+      - name: Post-check: Validate OSPF state
+        ansible.builtin.command:
+          cmd: show ospf neighbor
+
+    handlers:
+      - name: Reload device
+        ansible.builtin.command:
+          cmd: reload

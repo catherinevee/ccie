@@ -1,0 +1,14 @@
+---
+# Validation role tasks for post-deployment checks
+
+- name: Validate BGP state
+  ansible.builtin.command:
+    cmd: show bgp summary
+
+- name: Validate OSPF state
+  ansible.builtin.command:
+    cmd: show ospf neighbor
+
+- name: Validate MPLS state
+  ansible.builtin.command:
+    cmd: show mpls ldp neighbor

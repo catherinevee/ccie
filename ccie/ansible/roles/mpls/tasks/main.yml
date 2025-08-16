@@ -1,0 +1,12 @@
+---
+# MPLS role tasks for core and edge devices
+
+- name: Configure MPLS core
+  ansible.builtin.template:
+    src: mpls_core.j2
+    dest: /tmp/{{ inventory_hostname }}_mpls_core.cfg
+
+- name: Configure MPLS L3VPN
+  ansible.builtin.template:
+    src: l3vpn_vrf.j2
+    dest: /tmp/{{ inventory_hostname }}_l3vpn.cfg

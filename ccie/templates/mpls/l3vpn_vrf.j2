@@ -1,0 +1,22 @@
+FILE: /ccie/ccie/templates/mpls/l3vpn_vrf.j2
+----------------------------------------
+# L3VPN VRF Configuration Template for MPLS
+
+{% for vrf in vrf_definitions %}
+vrf {{ vrf.name }} {
+    description "{{ vrf.description }}"
+    rd {{ vrf.rd }}
+    route-target import {{ vrf.route_target_import }}
+    route-target export {{ vrf.route_target_export }}
+    
+    # Configure interfaces for the VRF
+    {% for interface in vrf.interfaces %}
+    interface {{ interface.name }}
+        vrf forwarding {{ vrf.name }}
+        ip address {{ interface.ip_address }} {{ interface.subnet_mask }}
+    {% endfor %}
+}
+{% endfor %}
+
+# Additional configurations can be added below
+----------------------------------------

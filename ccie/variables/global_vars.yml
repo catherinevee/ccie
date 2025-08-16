@@ -1,0 +1,31 @@
+FILE: /ccie/ccie/variables/global_vars.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: Global variables for network configurations
+# Scope: Global
+# ==============================================
+
+company_name: zwu
+domain_name: example.com
+management_ip: 192.168.1.1
+ntp_server: 192.168.1.100
+syslog_server: 192.168.1.200
+vlan_range: 
+  - 10
+  - 20
+  - 30
+  - 40
+  - 50
+vrf_default: "default"
+qos_policy: "qos_policy_1"
+vni_base: 10000
+fabric_name: "ZwuFabric"
+underlay_protocol: "OSPF"
+overlay_protocol: "BGP"
+bgp_asn: 65000
+ospf_area: 0.0.0.0
+loopback_ip: 10.0.0.1
+gateway_ip: 10.0.0.254
+management_vlan: 100
+```

@@ -1,0 +1,19 @@
+FILE: /ccie/ccie/templates/services/qos_policy.j2
+----------------------------------------
+# QoS Policy Configuration Template
+# This template is used to generate QoS policy configurations for network devices.
+
+# Define the class-map for matching traffic types
+class-map match-{{ traffic_type }}
+ match {{ match_criteria }}
+
+# Define the policy-map for applying QoS actions
+policy-map {{ policy_name }}
+{{ qos_actions }}
+
+# Apply the policy to the appropriate interface
+interface {{ interface_name }}
+ service-policy {{ service_policy_direction }} {{ policy_name }}
+
+# End of QoS Policy Configuration
+----------------------------------------

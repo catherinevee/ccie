@@ -1,0 +1,53 @@
+FILE: /ccie/ccie/templates/mpls/mpls_pe.j2
+----------------------------------------
+# MPLS PE Router Configuration Template
+
+## ==============================================
+## Device: {{ device_name }}
+## Role: PE
+## Platform: {{ platform }}
+## Generated: {{ generation_date }}
+## ==============================================
+
+hostname {{ device_name }}
+
+# Management Configuration
+interface Loopback0
+ ip address {{ loopback_ip }} {{ loopback_mask }}
+!
+
+# MPLS Configuration
+mpls ip
+mpls label protocol ldp
+
+# BGP Configuration
+router bgp {{ bgp_as }}
+ bgp log-neighbor-changes
+ neighbor {{ core_neighbor_ip }} remote-as {{ core_neighbor_as }}
+ neighbor {{ core_neighbor_ip }} update-source Loopback0
+!
+
+# VRF Configuration
+{% for vrf in vrf_list %}
+vrf definition {{ vrf.name }}
+ rd {{ vrf.rd }}
+ route-target both {{ vrf.route_target }}
+!
+{% endfor %}
+
+# Interface Configuration
+{% for interface in interfaces %}
+interface {{ interface.name }}
+ description {{ interface.description }}
+ ip address {{ interface.ip }} {{ interface.mask }}
+ mpls ip
+!
+{% endfor %}
+
+# Anycast Gateway Configuration
+interface Vlan{{ anycast_vlan }}
+ ip address {{ anycast_ip }} {{ anycast_mask }}
+!
+
+# End of Configuration
+----------------------------------------

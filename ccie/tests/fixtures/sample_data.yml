@@ -1,0 +1,70 @@
+FILE: /ccie/tests/fixtures/sample_data.yml
+----------------------------------------
+---
+# Sample data for testing purposes
+# This file contains various sample configurations and data structures
+# to be used in unit and integration tests.
+
+devices:
+  - name: spine01
+    role: spine
+    ip_address: 10.0.0.1
+    model: Nexus 93180YC-FX
+    os: NX-OS
+
+  - name: spine02
+    role: spine
+    ip_address: 10.0.0.2
+    model: Nexus 93180YC-FX
+    os: NX-OS
+
+  - name: leaf01
+    role: leaf
+    ip_address: 10.0.1.1
+    model: Nexus 93180YC-FX
+    os: NX-OS
+
+  - name: leaf02
+    role: leaf
+    ip_address: 10.0.1.2
+    model: Nexus 93180YC-FX
+    os: NX-OS
+
+  - name: border01
+    role: border
+    ip_address: 10.0.2.1
+    model: ASR 1001-X
+    os: IOS-XE
+
+  - name: border02
+    role: border
+    ip_address: 10.0.2.2
+    model: ASR 1001-X
+    os: IOS-XE
+
+services:
+  - name: L2VPN
+    type: VPWS
+    description: Point-to-Point Ethernet service
+    vpls_id: 100
+
+  - name: L3VPN
+    type: MPLS
+    description: Layer 3 VPN service
+    vrf_name: Customer_A
+
+  - name: EVPN
+    type: Overlay
+    description: Ethernet VPN service
+    vni: 5000
+
+test_cases:
+  - description: Validate spine switch configurations
+    expected_result: "Configuration should match the defined standards."
+
+  - description: Check connectivity between leaf and spine
+    expected_result: "Ping should succeed between leaf and spine devices."
+
+  - description: Verify L2VPN service functionality
+    expected_result: "Traffic should flow between endpoints without loss."
+----------------------------------------

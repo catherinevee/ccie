@@ -1,0 +1,12 @@
+---
+# EVPN role tasks for fabric overlays
+
+- name: Configure EVPN overlay
+  ansible.builtin.template:
+    src: evpn_overlay.j2
+    dest: /tmp/{{ inventory_hostname }}_evpn.cfg
+
+- name: Configure VXLAN VTEP
+  ansible.builtin.template:
+    src: vxlan_vtep.j2
+    dest: /tmp/{{ inventory_hostname }}_vxlan.cfg

@@ -1,0 +1,41 @@
+FILE: /ccie/ccie/variables/services/vrf_definitions.yml
+----------------------------------------
+---
+# ==============================================
+# Purpose: VRF Definitions for the network
+# Scope: Service-level configurations
+# ==============================================
+
+vrf_definitions:
+  - name: "VRF-RED"
+    rd: "100:1"
+    rt_import: 
+      - "100:1"
+    rt_export: 
+      - "100:1"
+    description: "Red VRF for production traffic"
+
+  - name: "VRF-BLUE"
+    rd: "200:1"
+    rt_import: 
+      - "200:1"
+    rt_export: 
+      - "200:1"
+    description: "Blue VRF for development traffic"
+
+  - name: "VRF-GREEN"
+    rd: "300:1"
+    rt_import: 
+      - "300:1"
+    rt_export: 
+      - "300:1"
+    description: "Green VRF for testing traffic"
+
+  - name: "VRF-YELLOW"
+    rd: "400:1"
+    rt_import: 
+      - "400:1"
+    rt_export: 
+      - "400:1"
+    description: "Yellow VRF for guest traffic"
+----------------------------------------
